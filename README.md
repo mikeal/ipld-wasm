@@ -4,7 +4,7 @@ This is a simple library for:
 
 * Encoding the results of WASM functions alongside a reference to that function.
 * Encoding and decoding WASM functions that are larger than a single block [using FBL](https://github.com/ipld/specs/blob/master/data-structures/flexible-byte-layout.md).
-* Caching WASM functions that have already been loaded.
+* Caching instantiated WASM that have already been loaded.
 
 ```js
 import create from '@ipld/wasm'
@@ -15,13 +15,14 @@ const put = async ({ cid, bytes }) => kv.put(cid.toString(), bytes)
 
 // example WASM encoders and decoders
 const encode = async (wasm, ...args) => {
-  // encode args, use wasm function, etc
+  // encode args, use instantiated wasm module, etc
   // must return single CID for encoding
   return cid
 }
 const decode = async (wasm, cid) => {
   const block = await get(cid)
-  // do wasm things and return any JS object you'd like
+  // do things with the insantiated wasm module
+  // return any JS object you'd like
 }
 
 const iw = create({ get, put, encode, decode })
